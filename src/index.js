@@ -1,5 +1,5 @@
 import { fromEvent } from 'rxjs';
-import { map, mergeAll } from 'rxjs/operators';
+import { map, mergeAll, takeUntil } from 'rxjs/operators';
 
 const canvas = document.getElementById('reactive-canvas');
 
@@ -12,8 +12,10 @@ const updateCursorPosition = (event) => {
 };
 
 const onMouseDown$ = fromEvent(canvas, 'mousedown');
-const onMouseMove$ = fromEvent(canvas, 'mousemove');
 const onMouseUp$ = fromEvent(canvas, 'mouseup');
+const onMouseMove$ = fromEvent(canvas, 'mousemove').pipe(
+  takeUntil(onMouseUp$)
+)
 
 onMouseDown$.subscribe(updateCursorPosition);
 
@@ -38,5 +40,3 @@ const startPaint$ = onMouseDown$.pipe(
 );
 
 startPaint$.subscribe(paintStroke);
-
-onMouseUp$.subscribe()

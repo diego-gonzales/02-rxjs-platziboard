@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/operator_take_until.js',
+  entry: './src/index.js',
   output: {
     // path: __dirname + '/dist',
     // filename: 'bundle.js',
